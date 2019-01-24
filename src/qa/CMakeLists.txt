@@ -44,29 +44,57 @@ target_link_libraries(Process
     ${ROOT_LIBRARIES}
 )
 
-add_library(ProcessorFactory ProcessorFactory.cxx)
+#add_library(ProcessorFactory ProcessorFactory.cxx)
 
-add_library(ConfigurePython ConfigurePython.cxx)
-target_link_libraries(ConfigurePython 
-    ${PYTHON_LIBRARIES}
-    Process
-    ProcessorFactory
-)
+#add_library(ConfigurePython ConfigurePython.cxx)
+#target_link_libraries(ConfigurePython 
+#    ${PYTHON_LIBRARIES}
+#    Process
+#    ProcessorFactory
+#)
 
-add_library(BaselineProcessor SHARED 
-    BaselineProcessor.cxx
-)
-set_property(TARGET BaselineProcessor PROPERTY POSITION_INDEPENDENT_CODE ON) 
-target_link_libraries(BaselineProcessor
-    Processor
-    QAUtils
+#add_library(BaselineProcessor SHARED 
+#    BaselineProcessor.cxx
+#)
+#set_property(TARGET BaselineProcessor PROPERTY POSITION_INDEPENDENT_CODE ON) 
+#target_link_libraries(BaselineProcessor
+#    Processor
+#    QAUtils
+#    ${TRACKER_EVENT_LIB}
+#    ${DATA_LIB}
+#    ${BZ2_LIB}
+#)
+#
+#add_executable(svt_qa svt_qa.cxx)
+#target_link_libraries(svt_qa 
+#    ConfigurePython
+#    Process
+#)
+
+add_executable(baseline baseline.cxx)
+target_link_libraries(baseline
+	${ROOT_LIBRARIES}
     ${TRACKER_EVENT_LIB}
-    ${DATA_LIB}
+    ${TRACKER_SAMPLE_LIB}
+    ${DATA_READ_LIB}
+    ${XMLVARIABLES_LIB}
     ${BZ2_LIB}
-)
+    ${XML_LIB}
+    ${DATA_LIB}
+    Apv25Utils	
+   ${RT_LIB}
+    )
 
-add_executable(svt_qa svt_qa.cxx)
-target_link_libraries(svt_qa 
-    ConfigurePython
-    Process
-)
+add_executable(makeHD makeHD.cc)
+target_link_libraries(makeHD
+	${ROOT_LIBRARIES}
+    ${TRACKER_EVENT_LIB}
+    ${TRACKER_SAMPLE_LIB}
+    ${DATA_READ_LIB}
+    ${XMLVARIABLES_LIB}
+    ${BZ2_LIB}
+    ${XML_LIB}
+    ${DATA_LIB}
+    Apv25Utils	
+   ${RT_LIB}
+    )

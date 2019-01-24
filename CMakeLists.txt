@@ -18,7 +18,8 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${SVT_QA_BINARY_DIR}/bin")
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${SVT_QA_BINARY_DIR}/lib")
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${SVT_QA_BINARY_DIR}/lib")
 
-set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -ldl")
+set (CMAKE_CXX_FLAGS "-ldl -fPIC ${CMAKE_CXX_FLAGS}")
+#set (CMAKE_LD_FLAGS "${CMAKE_LD_FLAGS} -ldl")
 
 # Tell CMake where to find ROOT
 list(APPEND CMAKE_PREFIX_PATH $ENV{ROOTSYS})
@@ -51,7 +52,7 @@ set(UTILS_HDR_DIR "${SVT_QA_SOURCE_DIR}/include/utils")
 include_directories("${UTILS_HDR_DIR}")
 
 # Include EVIO headers
-include_directories("$ENV{EVIO_INCLUDE_PATH}")
+#include_directories("$ENV{EVIO_INCLUDE_PATH}")
 
 # Include the QA headers 
 set(QA_HDR_DIR "${SVT_QA_SOURCE_DIR}/include/qa")
@@ -76,13 +77,13 @@ include_directories("${DAQ_HDR_DIR}")
 add_subdirectory("${SVT_QA_SOURCE_DIR}/src/utils")
 
 # Add the plotting subdirectory to the build
-add_subdirectory("${SVT_QA_SOURCE_DIR}/src/plotting")
+#add_subdirectory("${SVT_QA_SOURCE_DIR}/src/plotting")
 
 # Add the analysis subdirectory to the build
 add_subdirectory("${SVT_QA_SOURCE_DIR}/src/qa")
 
 # Add the daq directory to the build
-add_subdirectory("${SVT_QA_SOURCE_DIR}/src/daq")
+#add_subdirectory("${SVT_QA_SOURCE_DIR}/src/daq")
 
 # Add the test directory to the build
 #add_subdirectory("${SVT_QA_SOURCE_DIR}/test")

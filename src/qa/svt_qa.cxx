@@ -14,6 +14,7 @@
 #include <exception>
 #include <iostream>
 #include <string>
+#include <signal.h>
 
 //-------------//
 //   SVT QA    //

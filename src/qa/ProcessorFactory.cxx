@@ -50,7 +50,7 @@ void ProcessorFactory::loadLibrary(const std::string& libname) {
     if (handle == NULL) {
         std::cout << dlerror() << std::endl;
         throw std::runtime_error("[ ProcessorFactory ]: Error loading library " + libname + ": " + dlerror());         
-    }
+   }
     
     libs_loaded_.insert(libname);
 }
