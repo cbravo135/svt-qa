@@ -130,6 +130,19 @@ fitNoiseSum_g = r.TGraph(len(chList), np.array(chList), np.array(fitNoiseSum))
 fitNoiseSum_g.SetName('fitNoiseSum_g')
 fitNoiseSum_g.SetTitle('Fit Noise;Physical Channel # ;RMS [ADC units]')
 
+print '\t\tSector B\t\tSector A'
+print 'pCH\tapvCH\t128+apvCH\t2*128-apvCH-1\t128-apvCH-1'
+Nlow = 0
+for pCH in range(len(fitNoiseSum)):
+    if pCH < 128: continue
+    apvCH = pCH%128
+    if (pCH%128) == 0: print 'APV%i'%( 4-(pCH/128) )
+    enc = fitNoiseSum[pCH]
+    if enc < 20.5:
+        Nlow = Nlow + 1
+        print '%i\t%i\t%i\t\t%i\t\t%i'%(pCH, apvCH, 128+apvCH, (2*128)-apvCH-1, 128-apvCH-1)
+print 'Nlow: %i'%Nlow
+
 fitPvNSum_g = r.TGraph(len(fitPedsSum), np.array(fitPedsSum), np.array(fitNoiseSum))
 fitPvNSum_g.SetName('fitPvNSum_g')
 fitPvNSum_g.SetTitle('Fit Noise;Fit Pedestal [ADC units];Fit ENC [ADC units]')

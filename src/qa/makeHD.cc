@@ -181,8 +181,8 @@ int main(int argc, char **argv)
             //if(hybrid != samples->hybrid()) continue; 
 
             // Get the physical channel 
-            old_apv = Apv25Utils::getOldApv(samples->apv()); 
-            //old_apv = samples->apv(); 
+            //old_apv = Apv25Utils::getOldApv(samples->apv()); 
+            old_apv = samples->apv(); 
             channel = Apv25Utils::getPhysicalChannel(old_apv, samples->channel());
 
             // For source test, comment out otherwise
@@ -214,8 +214,8 @@ int main(int argc, char **argv)
 
 void displayUsage()
 {
-    cout << "Usage: baseline [OPTIONS] ..."                 << endl;
-    cout << "Example: baseline -i input_file.bin"           << endl;
+    cout << "Usage: makeHD [OPTIONS] ..."                 << endl;
+    cout << "Example: makeHD -i input_file"           << endl;
     cout << "\n\t -i  Input file to be processed"         << endl;
     cout << "\t -h    Hybrid ID of the device under test"   << endl;
     cout << "\t -r    Run number. Used if ROOT output is enabled" << endl;
