@@ -238,7 +238,7 @@ int main(int argc, char **argv)
             // Get the physical channel 
             //old_apv = Apv25Utils::getOldApv(samples->apv()); 
             old_apv = samples->apv(); 
-            channel = Apv25Utils::getPhysicalChannel(old_apv, samples->channel());
+            channel = Apv25Utils::getPhysicalChannel(old_apv, samples->channel(), 1);
 
             // For source test, comment out otherwise
             /*if((samples->value(1) > samples->value(0) && samples->value(2) > samples->value(1)) ||
