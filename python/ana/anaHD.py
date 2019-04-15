@@ -13,6 +13,8 @@ from optparse import OptionParser
 oPar = OptionParser()
 oPar.add_option("-i", "--infilename", type="string", dest="infilename",
         default="dataTest_HD.root",help="Specify Input Filename", metavar="infilename")
+oPar.add_option("-t", "--pinThresh", type="float", dest="pinThresh",
+        default=30.0,help="Specify ENC Threshold in ADC units to decide which channels are pinholes", metavar="pinThresh")
 (options, args) = oPar.parse_args()
 
 r.gROOT.SetBatch(True)
@@ -138,7 +140,7 @@ for pCH in range(len(fitNoiseSum)):
     apvCH = pCH%128
     if (pCH%128) == 0: print 'APV%i'%( 4-(pCH/128) )
     enc = fitNoiseSum[pCH]
-    if enc < 20.5:
+    if enc < options.pinThresh:
         Nlow = Nlow + 1
         print '%i\t%i\t%i\t\t%i\t\t%i'%(pCH, apvCH, 128+apvCH, (2*128)-apvCH-1, 128-apvCH-1)
 print 'Nlow: %i'%Nlow

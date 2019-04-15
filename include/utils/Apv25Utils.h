@@ -27,7 +27,7 @@ namespace Apv25Utils
     /**
      *
      */
-    int getPhysicalChannel(int, int);
+    int getPhysicalChannel(int, int, int);
      
     /**
      *

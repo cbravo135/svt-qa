@@ -15,9 +15,23 @@ namespace
 
 namespace Apv25Utils
 { 
-    int getPhysicalChannel(int apv, int channel)
+    int getPhysicalChannel(int apv, int channel, int layer)
     {
-        return (TOTAL_HYBRID_CHANNELS - 1) - (apv*TOTAL_APV25_CHANNELS + (TOTAL_APV25_CHANNELS - 1) - channel); 
+        int apvMap[5] = {1, 0, 2, 3, 4};
+        int l0apv = apvMap[apv];
+        int PCH = -99;
+        switch(layer){
+            case 0:
+                PCH = l0apv*TOTAL_APV25_CHANNELS + channel;
+                break;
+            case 1:
+                PCH = (TOTAL_HYBRID_CHANNELS - 1) - (apv*TOTAL_APV25_CHANNELS + (TOTAL_APV25_CHANNELS - 1) - channel); 
+                break;
+            default:
+                PCH = (TOTAL_HYBRID_CHANNELS - 1) - (apv*TOTAL_APV25_CHANNELS + (TOTAL_APV25_CHANNELS - 1) - channel); 
+                break;
+        }
+        return PCH;
     }
 
     void fitShaperSignal(std::string fit_type, double* adc, double* fit_params)

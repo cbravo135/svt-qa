@@ -56,6 +56,7 @@ int main(int argc, char **argv)
     int fpga = -1;
     int hybrid = -1; 
     int flip = 0;
+    int layer = 0;
 
     int half_module_id = -1; 
     int option_char; 
@@ -64,7 +65,7 @@ int main(int argc, char **argv)
 
     // Parse any command line arguments. If there are no valid command line
     // arguments given, print the usage.
-    while((option_char = getopt(argc, argv, "i:d:u:n:r:p:m:f:")) != -1){
+    while((option_char = getopt(argc, argv, "i:d:u:n:r:p:m:f:l:")) != -1){
         switch(option_char){
             case 'i':
                 input_file_name = optarg;
@@ -86,6 +87,9 @@ int main(int argc, char **argv)
                 break;
             case 'f':
                 flip = atoi(optarg);
+                break;
+            case 'l':
+                layer = atoi(optarg);
                 break;
             case 'u':
                 displayUsage(); 
@@ -183,7 +187,7 @@ int main(int argc, char **argv)
             // Get the physical channel 
             //old_apv = Apv25Utils::getOldApv(samples->apv()); 
             old_apv = samples->apv(); 
-            channel = Apv25Utils::getPhysicalChannel(old_apv, samples->channel());
+            channel = Apv25Utils::getPhysicalChannel(old_apv, samples->channel(), layer);
 
             // For source test, comment out otherwise
             /*if((samples->value(1) > samples->value(0) && samples->value(2) > samples->value(1)) ||
