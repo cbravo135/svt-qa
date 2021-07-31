@@ -13,6 +13,10 @@ from optparse import OptionParser
 oPar = OptionParser()
 oPar.add_option("-i", "--infilename", type="string", dest="infilename",
         default="dataTest_HD.root",help="Specify Input Filename", metavar="infilename")
+oPar.add_option("-t", "--pinThresh", type="float", dest="pinThresh",
+        default=30.0,help="Specify ENC Threshold in ADC units to decide which channels are pinholes", metavar="pinThresh")
+oPar.add_option("-s", "--skipOddEven", type="int", dest="skipOE",
+        default=0,help="Specify if you want only the odd or even bad channels", metavar="skipOE")
 (options, args) = oPar.parse_args()
 
 r.gROOT.SetBatch(True)
@@ -129,6 +133,21 @@ noiseSum_g.SetTitle('Noise;Physical Channel # ;RMS [ADC units]')
 fitNoiseSum_g = r.TGraph(len(chList), np.array(chList), np.array(fitNoiseSum))
 fitNoiseSum_g.SetName('fitNoiseSum_g')
 fitNoiseSum_g.SetTitle('Fit Noise;Physical Channel # ;RMS [ADC units]')
+
+print '\t\tSector B\t\tSector A'
+print 'pCH\t|\tapvCH\t|\t128+apvCH\t|\t2*128-apvCH-1\t|\t128-apvCH-1'
+Nlow = 0
+for pCH in range(len(fitNoiseSum)):
+    if pCH > 511: continue
+    if (pCH%128) == 0: print 'APV%i'%( pCH/128 )
+    if options.skipOE == 2 and pCH%2 == 0: continue
+    if options.skipOE == 1 and pCH%2 == 1: continue
+    apvCH = pCH%128
+    enc = fitNoiseSum[pCH]
+    if enc < options.pinThresh:
+        Nlow = Nlow + 1
+        print '%i\t|\t%i\t|\t%i\t|\t%i\t|\t%i'%(pCH, apvCH, 128+apvCH, (2*128)-apvCH-1, 128-apvCH-1)
+print 'Nlow: %i'%Nlow
 
 fitPvNSum_g = r.TGraph(len(fitPedsSum), np.array(fitPedsSum), np.array(fitNoiseSum))
 fitPvNSum_g.SetName('fitPvNSum_g')
